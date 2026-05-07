@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragyan Sahu | Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                        secondary: '#7e22ce',
+                        dark: '#0f172a',
+                        darker: '#020617',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #7e22ce);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.2);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #0ea5e9, #7e22ce);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .active::after {
+            width: 100%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            background: linear-gradient(135deg, #0ea5e9, #7e22ce);
+            z-index: 10;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            box-shadow: 5px 5px 15px rgba(2, 6, 23, 0.5),
+                        -5px -5px 15px rgba(30, 41, 59, 0.5);
+        }
+
+        .contact-input {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .contact-input:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+        }
+
+        .input-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #0ea5e9, #7e22ce);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .profile-frame {
+            position: relative;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 4px solid rgba(15, 23, 42, 0.95);
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.16),
+                        0 0 0 8px rgba(14, 165, 233, 0.08);
+        }
+
+        .profile-image {
+            transition: transform 1.5s ease, filter 1.5s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.08) rotate(-1deg);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            300% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @media (max-width: 767px) {
+            .timeline-line {
+                left: 16px !important;
+                transform: none !important;
+            }
+
+            .timeline-item::before {
+                left: 16px;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-slate-200">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-darker/80 backdrop-blur-sm z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="text-2xl font-bold gradient-text">Portfolio</a>
+
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-slate-200 hover:text-primary focus:outline-none" aria-label="Open menu">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-2">
+                <a href="#home" class="block py-2 nav-link active">Home</a>
+                <a href="#about" class="block py-2 nav-link">About</a>
+                <a href="#skills" class="block py-2 nav-link">Skills</a>
+                <a href="#projects" class="block py-2 nav-link">Projects</a>
+                <a href="#contact" class="block py-2 nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    Hi, I'm <span class="gradient-text">Pragyan Sahu</span>
+                </h1>
+
+                <h2 class="text-2xl md:text-4xl font-semibold mb-6 text-slate-300">
+                    Aspiring Software Developer
+                </h2>
+
+                <p class="text-lg mb-8 text-slate-400 max-w-xl leading-relaxed">
+                    I am a Computer Science Engineering student and a passionate fresher
+                    focused on web development, programming, and real-world problem solving.
+                    I enjoy building responsive websites, learning new technologies, and
+                    improving my skills through practical projects.
+                </p>
+
+                <div class="flex space-x-4">
+                    <a href="#contact" class="px-6 py-3 rounded-full btn-primary font-medium">Hire Me</a>
+                    <a href="#projects" class="px-6 py-3 rounded-full border border-primary text-primary font-medium hover:bg-primary/10 transition">View Work</a>
+                </div>
+
+                <div class="flex mt-8 space-x-4">
+                    <a href="https://github.com/pragyansahuu" target="_blank" rel="noopener noreferrer" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 hover:bg-primary" title="GitHub" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/pragyan-sahu-" target="_blank" rel="noopener noreferrer" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 hover:bg-blue-600" title="LinkedIn" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="mailto:sahupragyan361@gmail.com" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 hover:bg-red-500" title="Email" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 flex justify-center md:justify-end md:pr-16 lg:pr-28">
+                <div class="relative w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 profile-frame">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-secondary blur-xl opacity-20"></div>
+
+                    <img src="pragyan.jpg.jpeg"
+                         alt="Pragyan Sahu Profile Photo"
+                         class="relative w-full h-full object-cover object-top floating profile-image">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    About <span class="gradient-text">Me</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+            </div>
+
+            <div class="flex flex-col items-center text-center max-w-4xl mx-auto">
+                <div class="w-full">
+                    <h3 class="text-2xl font-bold mb-6">Who am I?</h3>
+
+                    <p class="text-slate-500 mb-6">
+                        I am a Computer Science Engineering student at GIET University with a strong
+                        foundation in programming, web development, database management, and AI/ML.
+                        I am eager to gain hands-on experience in software development while contributing
+                        to meaningful projects.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <h4 class="font-semibold mb-2">Name: <span class="text-slate-300">Pragyan Sahu</span></h4>
+                            <h4 class="font-semibold mb-2">Email: <span class="text-slate-300">sahupragyan361@gmail.com</span></h4>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2">Experience: <span class="text-slate-300">Fresher</span></h4>
+                            <h4 class="font-semibold mb-2">Role: <span class="text-slate-300">CSE Student / Developer</span></h4>
+                            <h4 class="font-semibold mb-2">Location: <span class="text-slate-300">Odisha, India</span></h4>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-4 mt-6 flex-wrap">
+                        <a href="final.pdf" download class="px-6 py-3 rounded-full btn-primary font-medium">Download CV</a>
+                        <a href="#contact" class="px-6 py-3 rounded-full border border-primary text-primary font-medium hover:bg-primary/10 transition">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-20">
+                <h3 class="text-2xl font-bold mb-8 text-center">
+                    My <span class="gradient-text">Journey</span>
+                </h3>
+
+                <div class="relative max-w-3xl mx-auto">
+                    <div class="timeline-line absolute left-1/2 h-full w-0.5 bg-slate-700 transform -translate-x-1/2"></div>
+
+                    <div class="relative mb-8 flex flex-col md:flex-row justify-between items-center w-full timeline-item">
+                        <div class="hidden md:block order-1 w-5/12"></div>
+
+                        <div class="order-1 w-full md:w-5/12 ml-10 md:ml-0 px-4 py-4 bg-slate-800 rounded-lg shadow-lg">
+                            <h4 class="text-lg font-bold mb-2">B.Tech in CSE</h4>
+                            <p class="text-sm text-slate-400 mb-2">GIET University • 2023 - 2027</p>
+                            <p class="text-slate-300">
+                                Studying Computer Science Engineering with courses like DBMS,
+                                Operating Systems, Computer Networks, and OOPS. Current CGPA: 7.5.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative mb-8 flex flex-col md:flex-row justify-between items-center w-full timeline-item">
+                        <div class="order-1 w-full md:w-5/12 ml-10 md:ml-0 px-4 py-4 bg-slate-800 rounded-lg shadow-lg">
+                            <h4 class="text-lg font-bold mb-2">Full Stack Web Development Intern</h4>
+                            <p class="text-sm text-slate-400 mb-2">InternPe • May 2024 - Jun 2024</p>
+                            <p class="text-slate-300">
+                                Worked on web development concepts and built practical projects using
+                                HTML, Bootstrap, JavaScript, and responsive UI components.
+                            </p>
+                        </div>
+
+                        <div class="hidden md:block order-1 w-5/12"></div>
+                    </div>
+
+                    <div class="relative mb-8 flex flex-col md:flex-row justify-between items-center w-full timeline-item">
+                        <div class="hidden md:block order-1 w-5/12"></div>
+
+                        <div class="order-1 w-full md:w-5/12 ml-10 md:ml-0 px-4 py-4 bg-slate-800 rounded-lg shadow-lg">
+                            <h4 class="text-lg font-bold mb-2">AI/ML Training</h4>
+                            <p class="text-sm text-slate-400 mb-2">CTTC Bhubaneswar</p>
+                            <p class="text-slate-300">
+                                Completed training in Artificial Intelligence and Machine Learning
+                                and built projects such as Face Recognition using Python and OpenCV.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Skills Section -->
+<section id="skills" class="py-20 bg-dark">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                My <span class="gradient-text">Skills</span>
+            </h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-html5 text-5xl text-orange-500 mb-4"></i>
+                <h3 class="font-semibold text-sm">HTML</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-css3-alt text-5xl text-blue-500 mb-4"></i>
+                <h3 class="font-semibold text-sm">CSS</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-js text-5xl text-yellow-400 mb-4"></i>
+                <h3 class="font-semibold text-sm">JavaScript</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-react text-5xl text-cyan-400 mb-4"></i>
+                <h3 class="font-semibold text-sm">React JS</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-github text-5xl text-white mb-4"></i>
+                <h3 class="font-semibold text-sm">GitHub</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-node-js text-5xl text-green-500 mb-4"></i>
+                <h3 class="font-semibold text-sm">Node JS</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fas fa-fire text-5xl text-yellow-500 mb-4"></i>
+                <h3 class="font-semibold text-sm">Firebase</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fas fa-database text-5xl text-green-400 mb-4"></i>
+                <h3 class="font-semibold text-sm">MongoDB</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-python text-5xl text-blue-400 mb-4"></i>
+                <h3 class="font-semibold text-sm">Python</h3>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl p-6 text-center card-hover border border-slate-800">
+                <i class="fab fa-docker text-5xl text-sky-400 mb-4"></i>
+                <h3 class="font-semibold text-sm">Docker</h3>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    My <span class="gradient-text">Projects</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project 6 in Project 1 Place -->
+                <div class="project-card rounded-xl overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1470&q=80"
+                             alt="To-Do List App"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">To-Do List App</h3>
+
+                        <p class="text-slate-400 mb-4">
+                            A task management mini project for adding, deleting, and managing daily tasks
+                            using web technologies.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">HTML</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">Tailwind</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">Responsive</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <a href="https://todolistpragyan.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+
+                            <a href="https://github.com/pragyansahuu/To-Do-List" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 in Project 2 Place -->
+                <div class="project-card rounded-xl overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1470&q=80"
+                             alt="Calculator App"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Calculator App</h3>
+
+                        <p class="text-slate-400 mb-4">
+                            A simple calculator application built to perform basic arithmetic operations
+                            with a clean user interface.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">HTML5</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">CSS3</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">UI Design</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <a href="https://pragyancalculator.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+
+                            <a href="https://github.com/pragyansahuu/Calculator" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 in Project 3 Place -->
+                <div class="project-card rounded-xl overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1469&q=80"
+                             alt="E-commerce Website"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">E-commerce Website</h3>
+
+                        <p class="text-slate-400 mb-4">
+                            An e-commerce website for purchasing and selling items with interactive
+                            UI components and responsive design.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">HTML</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">Bootstrap</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">JavaScript</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <a href="https://pragyane-commerce.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+
+                            <a href="https://github.com/pragyansahuu/e-commerce" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 1 in Project 4 Place -->
+                <div class="project-card rounded-xl overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1470&q=80"
+                             alt="Smart Crop Advisory System"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Smart Crop Advisory System</h3>
+
+                        <p class="text-slate-400 mb-4">
+                            A smart advisory system for small and marginal farmers to support crop
+                            selection, pest control, fertilizer use, and localized farming guidance.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">HTML</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">Tailwind CSS</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">JavaScript</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <a href="https://pragyansahuu.github.io/smart-crop-advisory/" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+
+                            <a href="https://github.com/pragyansahuu" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 in Project 5 Place -->
+                <div class="project-card rounded-xl overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555421689-3f034debb7a6?auto=format&fit=crop&w=1470&q=80"
+                             alt="Face Recognition System"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Face Recognition System</h3>
+
+                        <p class="text-slate-400 mb-4">
+                            A face recognition system using Python and OpenCV to detect and recognize
+                            human faces in real-time for identification purposes.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">Python</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">OpenCV</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">MySQL</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <a href="https://pragyansahuu.github.io/face-recognition-system/" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+
+                            <a href="https://github.com/pragyansahuu" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 in Project 6 Place -->
+                <div class="project-card rounded-xl overflow-hidden card-hover">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1470&q=80"
+                             alt="ERP System"
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">ERP System</h3>
+
+                        <p class="text-slate-400 mb-4">
+                            An employee management system developed using C programming with login,
+                            add, list, modify, delete, search, sorting, and file handling features.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">C</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">DSA</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">File Handling</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <a href="https://pragyansahuu.github.io/erp-system/" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+
+                            <a href="https://github.com/pragyansahuu" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="https://github.com/pragyansahuu" target="_blank" rel="noopener noreferrer" class="px-8 py-3 rounded-full btn-primary font-medium inline-flex items-center">
+                    View All Projects <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Get In <span class="gradient-text">Touch</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+
+                    <p class="text-slate-400 mb-8">
+                        Feel free to reach out to me for internships, projects, collaborations,
+                        or entry-level software development opportunities. I am always open to
+                        learning and working on new ideas.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-slate-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold mb-1">Location</h4>
+                                <p class="text-slate-400">Odisha, India</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-slate-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-primary text-xl"></i>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold mb-1">Email</h4>
+                                <p class="text-slate-400">sahupragyan361@gmail.com</p>
+                                <p class="text-slate-400 mt-2">
+                                    <i class="fas fa-phone-alt text-primary mr-2"></i>
+                                    +91 79781 91891
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Send Me a Message</h3>
+
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg contact-input focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block mb-2 font-medium">Your Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg contact-input focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block mb-2 font-medium">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 rounded-lg contact-input focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block mb-2 font-medium">Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-lg contact-input focus:outline-none"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 font-medium">Send Message Through</label>
+                            <select id="send-option" title="Send Message Through" class="w-full px-4 py-3 rounded-lg contact-input focus:outline-none">
+                                <option value="email">Email</option>
+                                <option value="whatsapp">WhatsApp</option>
+                            </select>
+                        </div>
+
+                        <p id="form-status" class="hidden text-sm font-medium"></p>
+
+                        <button type="submit" class="px-8 py-3 rounded-full btn-primary font-medium w-full">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#home" class="text-2xl font-bold gradient-text">Portfolio</a>
+                    <p class="text-slate-400 mt-2">
+                        © 2026 Pragyan Sahu. Designed & Developed by Pragyan.
+                    </p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="https://github.com/pragyansahuu" target="_blank" rel="noopener noreferrer" title="GitHub" class="text-slate-400 hover:text-primary transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/pragyan-sahu-" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-slate-400 hover:text-blue-600 transition">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+
+                    <a href="mailto:sahupragyan361@gmail.com" title="Email" class="text-slate-400 hover:text-red-500 transition">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-500">
+                <p>Made by <span class="text-primary font-semibold">Pragyan Sahu</span> with lots of ❤️</p>
+
+                <p class="mt-2 text-slate-400">
+                    <i class="fas fa-phone-alt text-primary mr-2"></i>
+                    +91 79781 91891
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" type="button" aria-label="Back to top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white shadow-lg hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+
+                if (targetId === '#') {
+                    e.preventDefault();
+                    return;
+                }
+
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    e.preventDefault();
+
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+
+                    document.querySelectorAll(`.nav-link[href="${targetId}"]`).forEach(link => {
+                        link.classList.add('active');
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            const backToTopButton = document.getElementById('back-to-top');
+
+            if (scrollPosition > 300) {
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const subject = document.getElementById('subject');
+            const message = document.getElementById('message');
+            const sendOption = document.getElementById('send-option');
+            const status = document.getElementById('form-status');
+
+            const fields = [name, email, subject, message];
+
+            fields.forEach(field => {
+                field.classList.remove('input-error');
+            });
+
+            status.classList.remove('hidden', 'text-green-400', 'text-red-400');
+
+            for (let field of fields) {
+                if (field.value.trim() === '') {
+                    field.classList.add('input-error');
+                    field.focus();
+
+                    status.textContent = 'Please fill this field first.';
+                    status.classList.add('text-red-400');
+                    return;
+                }
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email.value.trim())) {
+                email.classList.add('input-error');
+                email.focus();
+
+                status.textContent = 'Please enter a valid email address.';
+                status.classList.add('text-red-400');
+                return;
+            }
+
+            const fullMessage =
+                "Name: " + name.value.trim() + "\n" +
+                "Email: " + email.value.trim() + "\n" +
+                "Subject: " + subject.value.trim() + "\n\n" +
+                "Message:\n" + message.value.trim();
+
+            if (sendOption.value === 'email') {
+                status.textContent = 'Sending message...';
+                status.classList.add('text-green-400');
+
+                fetch("https://formsubmit.co/ajax/sahupragyan361@gmail.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name.value.trim(),
+                        email: email.value.trim(),
+                        subject: subject.value.trim(),
+                        message: message.value.trim(),
+                        full_message: fullMessage
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        status.textContent = "Message sent successfully.";
+                        status.classList.remove('text-red-400');
+                        status.classList.add('text-green-400');
+                        document.getElementById('contact-form').reset();
+                    } else {
+                        status.textContent = "Message not sent. Please activate FormSubmit from your Gmail first.";
+                        status.classList.remove('text-green-400');
+                        status.classList.add('text-red-400');
+                    }
+                })
+                .catch(error => {
+                    status.textContent = "Message not sent. Please check your internet or try WhatsApp.";
+                    status.classList.remove('text-green-400');
+                    status.classList.add('text-red-400');
+                });
+
+            } else {
+                const whatsappLink =
+                    "https://wa.me/917978191891?text=" + encodeURIComponent(fullMessage);
+
+                window.open(whatsappLink, '_blank');
+
+                status.textContent = 'WhatsApp opened successfully.';
+                status.classList.add('text-green-400');
+
+                this.reset();
+            }
+        });
+    </script>
+
+</body>
+</html>
